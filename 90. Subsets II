@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void subsets(set<vector<int>>& res, vector<int>& temp, vector<int>& nums, int len, int i, int n) {
+        if(len == 0) {
+            res.insert(temp);
+            return;
+        } else {
+            for(int j = i; j < n; j++) {
+                temp.push_back(nums[j]);
+                subsets(res, temp, nums, len-1, j+1, n);
+                temp.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        set<vector<int>> res;
+        vector<vector<int>> ans;
+        vector<int> temp;
+        res.insert(temp);
+        res.insert(nums);
+        int n = nums.size();
+        
+            for(int len = 1; len < n; len++) {
+                subsets(res, temp, nums, len, 0, n);
+            }
+         ans.assign(res.begin(),res.end());
+        
+        return ans;
+    }
+};
